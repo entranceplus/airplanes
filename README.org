@@ -1,0 +1,32 @@
+* Airplanes
+Live environment for working with [[https://github.com/flosell/lambdacd][lambdacd]] pipelines.
+
+** What is this?
+This project is structured with the [[https://github.com/danielsz/system/][system]] library.
+This starts a web server in development mode, and a web server + remote repl in production.
+The build tool used in this project is [[http://boot-clj.com/][Boot]].
+
+** Instructions
+*** Development
+
+Run a development pipeline from the command line:
+#+BEGIN_SRC bash
+$ boot dev
+#+END_SRC
+
+This will start a remote nrepl session
+
+You can write your pipelines in pipeline.clj.
+
+For example, if this is your pipeline-defs that you are passing to
+new-lambdacd-pipeline (see systems.clj)
+#+BEGIN_SRC clojure
+{:demo demo-pipeline-def
+ :other other-pipeline-def}
+#+END_SRC
+
+Then, the demo build will be available at
+http://localhost:9000/lambdaui/demo/lambdaui/index.html and other build at
+http://localhost:9000/lambdaui/other/lambdaui/index.html
+
+_Note_: Please make sure ~build.boot~ requires the system var in its namespace declarations.
