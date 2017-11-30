@@ -1,7 +1,7 @@
 (set-env!
  :resource-paths #{"src"}
  :dependencies '[[tolitius/boot-check "0.1.3" :scope "test"]
-                 [org.danielsz/system "0.4.1-SNAPSHOT"]
+                 [org.danielsz/system "0.4.2-SNAPSHOT"]
                  [environ "1.1.0"]
                  [boot-environ "1.1.0"]
 
@@ -12,7 +12,7 @@
                  [luminus-immutant "0.2.3"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [ring-middleware-format "0.7.0"]
-                 [lambdacd "0.13.2"]
+                 [lambdacd "0.13.5"]
                  [lambdaui "0.4.0"]
                  [http-kit "2.2.0"]
                  [clj-http "3.7.0"]
@@ -32,7 +32,6 @@
 (deftask dev
   "Run a restartable system in the Repl"
   []
-  (set-env! :checkouts '[[system "0.4.1-SNAPSHOT"]])
   (comp
    (environ :env {:http-port "9000"})
    (watch :verbose true)

@@ -6,10 +6,22 @@
   (shell/bash ctx (:cwd args) "lein test"))
 
 (defn build-uberjar [args ctx]
-  (shell/bash ctx (:cwd args) "lein uberjar"))
+  (shell/bash ctx (:cwd args) "boot build"))
+
+(defn env-props [env]
+  (reduce-kv (fn [env key value]
+               (str env (str " " "-D" (name key) "=" value)))
+             "" env))
+
+(defn gen-jar-cmd [jar-file env]
+  (str "java -jar " jar-file (env-props env)))
+
+(defn run-jar [env]
+  (fn [args ctx]
+    (shell/bash ctx (:cwd args) (gen-jar-cmd "target/kongauth-0.1.0-SNAPSHOT-standalone.jar" env))))
 
 (defn deploy-jar [args ctx]
-  (shell/bash ctx (:cwd args) "cp builds/airplanes/lambdacd/target/uberjar/server.jar /tmp/"))
+  (shell/bash ctx (:cwd args) "scp target/kongauth-0.1.0-SNAPSHOT-standalone.jar root@139.59.89.233:"))
 
 (defn some-step-that-does-nothing [args ctx]
   {:status :success})

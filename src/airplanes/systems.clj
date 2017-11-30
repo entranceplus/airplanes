@@ -3,7 +3,7 @@
             [lambdacd.steps.shell :as shell]
             [lambdacd.steps.manualtrigger :as manualtrigger]
             [com.stuartsierra.component :as component]
-            [airplanes.pipeline :refer [demo-pipeline-def other-pipeline-def]]
+            [airplanes.pipeline :as pipelines]
             (system.components
              [immutant-web :refer [new-immutant-web]]
              [repl-server :refer [new-repl-server]]
@@ -21,8 +21,8 @@
 
 (defn base-system []
   (component/system-map
-   :pipelines (new-lambdacd-pipeline {:demo demo-pipeline-def
-                                      :other other-pipeline-def}
+   :pipelines (new-lambdacd-pipeline {:kongauth pipelines/kongauth-pipeline
+                                      :other pipelines/other-pipeline-def}
                                      {:name "Airplanes"
                                       :home-dir "builds"
                                       :max-builds 3
