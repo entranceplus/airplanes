@@ -4,7 +4,7 @@
                  [org.danielsz/system "0.4.2-SNAPSHOT"]
                  [environ "1.1.0"]
                  [boot-environ "1.1.0"]
-
+                 [org.clojure/core.async "0.4.474"]
                  [ring "1.6.2"]
                  [ring/ring-defaults "0.3.1"]
                  [compojure "1.6.0"]

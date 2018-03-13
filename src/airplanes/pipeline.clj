@@ -36,7 +36,7 @@
       deploy-jar)))
 
 (def kongauth-pipeline
-  (make-clj-pipeline {:repo "git@github.com:entranceplus/kongauth.git"
+  (make-clj-pipeline {:repo "https://github.com/entranceplus/kongauth"
                       :env {:dbuser "kong"
                             :password "functor"
                             :host "127.0.0.1"
