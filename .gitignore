@@ -2,3 +2,6 @@
 .nrepl-port
 builds
 target/
+.nrepl-history
+config.edn
+*.jar

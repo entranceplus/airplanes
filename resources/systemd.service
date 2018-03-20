@@ -1,0 +1,11 @@
+[Unit]
+Description={{description}}
+After=network.target
+
+[Service]
+WorkingDirectory={{working-directory}}
+ExecStart={{exec-start}}
+User=root
+
+[Install]
+WantedBy=multi-user.target

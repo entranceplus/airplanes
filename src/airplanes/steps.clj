@@ -27,7 +27,8 @@
   {:status :success})
 
 (defn some-step-that-echos-foo [args ctx]
-  (shell/bash ctx "/" "echo foo"))
+  (println "Context is " ctx)
+  (shell/bash ctx "/" (str "echo " ctx)))
 
 (defn some-step-that-echos-bar [args ctx]
   (shell/bash ctx "/" "echo bar"))

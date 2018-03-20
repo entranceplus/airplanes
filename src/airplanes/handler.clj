@@ -17,6 +17,7 @@
   (lambdaui/ui-for   (get-pipeline bname pipelines)
                      :contextPath (str "/lambdaui/" bname)))
 
+
 (defn ui-routes [{pipeline :pipelines}]
   (routes
    (context "/lambdaui/:bname" [bname]

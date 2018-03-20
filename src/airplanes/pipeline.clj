@@ -16,7 +16,9 @@
   `(
     manualtrigger/wait-for-manual-trigger
     some-step-that-does-nothing
-    some-step-that-echos-bar))
+    some-step-that-echos-foo))
+
+
 
 (defn clone-repo [repo]
   (fn [args ctx]

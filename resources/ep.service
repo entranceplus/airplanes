@@ -1,0 +1,11 @@
+[Unit]
+Description=Ep container
+After=network.target
+
+[Service]
+WorkingDirectory=/root/ep
+ExecStart=/usr/bin/java -jar /root/ep/entrance-plus-0.1.0-SNAPSHOT-standalone.jar
+User=root
+
+[Install]
+WantedBy=multi-user.target
