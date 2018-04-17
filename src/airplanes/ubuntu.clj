@@ -65,7 +65,7 @@
              ["add-repository"  "ppa:certbot/certbot" "-y"]
              (install-package "python-certbot-nginx")))
 
-(install-certbot)
+; (install-certbot)
 
 (defn get-certificates [domains]
   (let [domains-str (map #(cmd-str "-d" %) domains)]

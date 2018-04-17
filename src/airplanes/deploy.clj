@@ -91,8 +91,8 @@
 ;;   work out so create a new session at the end of every))
 (defn- create-session [ip ssh-path]
   (let [agent (ssh/ssh-agent {})]
-    (ssh/add-identity agent {:private-key-path (str ssh-path "\\id_rsa")
-                             :public-key-path (str ssh-path "\\id_rsa.pub")})
+    (ssh/add-identity agent {:private-key-path (str ssh-path "/id_rsa")
+                             :public-key-path (str ssh-path "/id_rsa.pub")})
     (ssh/session agent
                  ip
                  {:strict-host-key-checking :no
@@ -100,7 +100,7 @@
 
 (defn exec-cmd [ip cmd & {:keys [ssh-dir]}]
   (let [session (create-session ip (or ssh-dir
-                                       "D:\\.ssh"))]
+                                       "~/.ssh"))]
     (ssh/with-connection  session
           (ssh/ssh session {:cmd cmd}))))
 
@@ -109,7 +109,8 @@
 
 (defn copy-file [ip & {:keys [src dest ssh-dir]}]
   (let [session (create-session ip (or ssh-dir
-                                       "D:\\.ssh"))]
+                                       "~/.ssh"))]
+    (println "Session is " session)
     (ssh/with-connection session
       (let [channel (ssh/ssh-sftp session)]
         (ssh/with-channel-connection channel
@@ -152,11 +153,14 @@
 
 ;; (setup-nginx ip apps)
 
-(defn copy-jar [ip]
-  (do (:out (exec-cmd ip "mkdir ep"))
+;; "resources/entrance-plus-0.1.0-SNAPSHOT-standalone.jar"
+
+(defn copy-jar [ip src name]
+  (println "src is " src)
+  (do (:out (exec-cmd ip (str "mkdir " name)))
       (copy-file ip
-                 :src "resources/entrance-plus-0.1.0-SNAPSHOT-standalone.jar"
-                 :dest "/root/ep/")))
+                 :src src
+                 :dest (str "/root/" name "/"))))
 
 ;; (copy-jar "139.162.31.74")
 ;; (println (:out (exec-cmd ip (ubuntu/install-java))))
@@ -174,14 +178,20 @@
 
 (defn setup-systemd [ip {:keys [name] :as app}]
   (let [temp-file (str "resources/" name ".service")]
-   (do (spit temp-file (gen-systemd-config app))
+    (do (spit temp-file (gen-systemd-config app))
+        (println "temp file is " temp-file)
        (copy-file ip :src temp-file
                      :dest (str "/lib/systemd/system/" name ".service"))
        ;; create sth like exec-cmd(s)
        (exec-cmd ip "systemctl daemon-reload")
-       (exec-cmd ip (ubuntu/enable-service name)))))
+       (exec-cmd ip (ubuntu/enable-service name)))))+
 
-; (print-cmd ip (ubuntu/service-status "ep"))
+
+;(print-cmd ip (ubuntu/service-status "project"))
+;(print-cmd ip "ls /lib/systemd/system/")
+
+;(print-cmd ip "systemctl stop ep")
+
 ;; (exec-cmd ip "certbot --help")
 ; (setup-systemd ip app)
 
