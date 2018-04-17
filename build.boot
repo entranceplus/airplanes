@@ -38,6 +38,15 @@
   []
   (comp
    (pom :project 'airplanes
-        :version "0.0.1")
+        :version "0.0.1-SNAPSHOT")
    (jar)
    (install)))
+
+(require '[adzerk.bootlaces :refer :all])
+(bootlaces! version)
+
+(deftask publish []
+  (comp
+   (build-jar)
+   (push-snapshot)))
+
