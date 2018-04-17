@@ -1,5 +1,6 @@
 * Airplanes
 Live environment for working with [[https://github.com/flosell/lambdacd][lambdacd]] pipelines.
+Deprecated in favour of https://github.com/entranceplus/airplanes .
 
 ** What is this?
 This project is structured with the [[https://github.com/danielsz/system/][system]] library.

@@ -16,7 +16,7 @@
                  [ring-middleware-format "0.7.0"]
                  [lambdacd "0.13.5"]
                  [venantius/pyro "0.1.2"]
-                 [lambdaui "0.4.0"]
+                 [lambdaui "1.0.1-SNAPSHOT"]
                  [http-kit "2.2.0"]
                  [clj-http "3.7.0"]
                  [clj-ssh "0.5.14"]
@@ -26,7 +26,7 @@
                  [cheshire "5.8.0"]
                  [metosin/muuntaja "0.5.0"]
                  [snow "0.1.0-SNAPSHOT"]
-                 [lambdacd-git "0.3.0"]
+                 [lambdacd-git "0.4.1"]
                  [lambdacd-cron "0.1.1"]])
 
 (require
