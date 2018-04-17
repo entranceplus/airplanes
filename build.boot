@@ -35,12 +35,19 @@
 (def project 'airplanes)
 (def version  "0.0.1-SNAPSHOT")
 
+(task-options!
+ pom {:project     project
+      :version     version
+      :description "Airplanes"
+      :scm         {:url "https://github.com/entranceplus/airplanes"}
+      :license     {"Eclipse Public License"
+                    "http://www.eclipse.org/legal/epl-v10.html"}})
+
 (deftask build
   "Builds an uberjar of this project that can be run with java -jar"
   []
   (comp
-   (pom :project project
-        :version version)
+   (pom)
    (jar)
    (install)))
 
