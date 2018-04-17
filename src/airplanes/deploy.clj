@@ -1,6 +1,5 @@
 (ns airplanes.deploy
-  (:require [lambdacd.steps.shell :as shell]
-            [clojure.core.async :refer [chan >!! <!!]]
+  (:require [clojure.core.async :refer [chan >!! <!!]]
             [snow.client :refer [get post delete]]
             [clj-ssh.ssh :as ssh]
             [selmer.parser :as selmer]
