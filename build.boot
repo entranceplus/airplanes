@@ -32,13 +32,14 @@
  '[system.boot :refer [system run]]
  '[system.repl :refer [go reset]])
 
+(def project 'airplanes)
 (def version  "0.0.1-SNAPSHOT")
 
 (deftask build
   "Builds an uberjar of this project that can be run with java -jar"
   []
   (comp
-   (pom :project 'airplanes
+   (pom :project project
         :version version)
    (jar)
    (install)))
