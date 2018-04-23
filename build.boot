@@ -1,6 +1,6 @@
 (set-env!
  :resource-paths #{"src" "resources"}
- :checkouts '[[snow "0.1.2"]]
+ :checkouts '[[snow "0.1.1"]]
  :dependencies '[[tolitius/boot-check "0.1.3" :scope "test"]
                  [org.danielsz/system "0.4.2-SNAPSHOT"]
                  [environ "1.1.0"]
@@ -24,7 +24,7 @@
                  [datawalk "0.1.12"]
                  [cheshire "5.8.0"]
                  [metosin/muuntaja "0.5.0"]
-                 [snow "0.1.2"]])
+                 [snow "0.1.1"]])
 
 (require
  '[tolitius.boot-check :as check]
