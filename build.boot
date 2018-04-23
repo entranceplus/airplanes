@@ -1,6 +1,6 @@
 (set-env!
  :resource-paths #{"src" "resources"}
- :checkouts '[[snow "0.1.0-SNAPSHOT"]]
+ :checkouts '[[snow "0.1.2"]]
  :dependencies '[[tolitius/boot-check "0.1.3" :scope "test"]
                  [org.danielsz/system "0.4.2-SNAPSHOT"]
                  [environ "1.1.0"]
@@ -13,7 +13,7 @@
                  [luminus-immutant "0.2.3"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [ring-middleware-format "0.7.0"]
-
+                 [entranceplus/bootlaces "0.1.14"]
                  [venantius/pyro "0.1.2"]
 
                  [http-kit "2.2.0"]
@@ -24,7 +24,7 @@
                  [datawalk "0.1.12"]
                  [cheshire "5.8.0"]
                  [metosin/muuntaja "0.5.0"]
-                 [snow "0.1.0-SNAPSHOT"]])
+                 [snow "0.1.2"]])
 
 (require
  '[tolitius.boot-check :as check]
