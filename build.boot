@@ -33,7 +33,7 @@
  '[system.repl :refer [go reset]])
 
 (def project 'airplanes)
-(def version  "0.0.1-SNAPSHOT")
+(def version  "0.0.2")
 
 (task-options!
  pom {:project     project
@@ -57,5 +57,5 @@
 (deftask publish []
   (comp
    (build-jar)
-   (push-snapshot)))
+   (push-release)))
 

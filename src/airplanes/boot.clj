@@ -11,7 +11,8 @@
    i ip IP str "Ip where to deploy"
    n name NAME str "Name of app"
    d dir DIR str "Directory to create"
-   p pom PATH  str "The pom.xml file to use."]
+   p pom PATH  str "The pom.xml file to use."
+   m main MAIN str "clojure main"]
   (boot/with-pass-thru [fs]
     (let [jarfiles (or (and file [(io/file file)])
                        (->> (boot/output-files fs)
@@ -25,5 +26,7 @@
         (d/setup-systemd ip {:working-directory (str "/root/" name)
                              :description (str name "-service")
                              :name name
-                             :exec-start (str "/usr/bin/java -jar " (.getName jarfile))})))))
+                             :exec-start (str "/usr/bin/java -jar "
+                                              (.getName jarfile)
+                                              (str " -m " main))})))))
 
