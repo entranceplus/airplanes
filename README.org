@@ -8,6 +8,53 @@ This project is structured with the [[https://github.com/danielsz/system/][syste
 This starts a web server in development mode, and a web server + remote repl in production.
 The build tool used in this project is [[http://boot-clj.com/][Boot]].
 
+** Roadmap (WIP)
+
+You configure the tool using a edn file. 
+
+#+BEGIN_SRC clojure
+{:proj1 {:trigger :push-any}
+#+END_SRC
+
+First key is the project name, here ~proj1~. 
+The accepted keys are
+
+| Keys     | Description                                               |
+|----------+-----------------------------------------------------------|
+| :trigger | specifies when to build the project. Available values are |
+|          | src_clojure{:push-any, :push}                             |
+|----------+-----------------------------------------------------------|
+| :build   | Build command to build the project                        |
+|----------+-----------------------------------------------------------|
+
+** Trigger behaviour
+
+| Key       | Description                                              |
+|-----------+----------------------------------------------------------|
+| :push-any | In this case, all the deps will be tracked and on update |
+|           | of any this project will be rebuild and redeployed       |
+|-----------+----------------------------------------------------------|
+| :push     | Build and deploy only when directly pushed here.         |
+|-----------+----------------------------------------------------------|
+
+** Rebuild flow 
+
+Performed on each upgrade
+
+- Update the deps.edn
+- Build the project. Command to be taken from ~:build~ key
+- If build is success, commit and push to remote
+- Now notify the deployed instances of upload
+
+*** Actions on server
+
+- Perform git pull
+- Restart systemctl service
+
+** Deploy flow
+
+Performed only the first time
+
 ** Instructions
 *** Development
 
