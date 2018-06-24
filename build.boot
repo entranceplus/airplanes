@@ -15,7 +15,7 @@
                  [ring-middleware-format "0.7.0"]
                  [entranceplus/bootlaces "0.1.14"]
                  [venantius/pyro "0.1.2"]
-
+                 [clj-jgit "0.8.10"]
                  [http-kit "2.2.0"]
                  [clj-http "3.7.0"]
                  [clj-ssh "0.5.14"]
@@ -33,7 +33,7 @@
  '[system.repl :refer [go reset]])
 
 (def project 'airplanes)
-(def version  "0.0.2")
+(def version  "0.0.3")
 
 (task-options!
  pom {:project     project
