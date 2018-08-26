@@ -24,7 +24,7 @@
                  [datawalk "0.1.12"]
                  [cheshire "5.8.0"]
                  [metosin/muuntaja "0.5.0"]
-                 [snow "0.4.1"]])
+                 [snow "0.4.3"]])
 
 (require
  '[tolitius.boot-check :as check]
