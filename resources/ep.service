@@ -3,8 +3,8 @@ Description=Ep container
 After=network.target
 
 [Service]
-WorkingDirectory=/root/ep
-ExecStart=/usr/bin/java -jar /root/ep/entrance-plus-0.1.0-SNAPSHOT-standalone.jar
+WorkingDirectory=/root/ep-build
+ExecStart=/usr/local/bin/clj -A:dev -m user
 User=root
 
 [Install]

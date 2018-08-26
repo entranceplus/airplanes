@@ -3,7 +3,12 @@
             [clojure.java.io :as io]
             [snow.env :refer [profile]]
             [clojure.edn :as edn]
-            [clojure.pprint :as p]))
+            [airplanes.deploy :as d]
+            [clojure.pprint :as p]
+            [timely.core :as timely]
+            [clojure.java.shell :refer [sh]]))
+
+#_(timely/start-scheduler)
 
 (def build-folder (-> (profile) :build-folder))
 
@@ -57,18 +62,26 @@
 #_(write-upgrade wd)
 #_(slurp (io/file wd "deps.edn"))
 
-(defn build-project [name {:keys [git-url trigger build]}]
+(defn run-build [{:keys [build wd]}]
+  (let [{:keys [exit out err]} (sh build :dir wd)]
+    (println out err)
+    (when-not (= exit 0)
+      (throw (ex-info "Build failed. Not proceeding further." {:directory wd})))))
+
+(defn build-project [{:keys [name git-url update? build] :as p}]
+  (io/make-parents build-folder)
   (let [wd  (-> name gen-wd .getAbsolutePath)
-        repo (make-repo wd git-url)]
+        repo (make-repo wd git-url)] 
     (println "Cloned succesfully")
-    (set! *print-namespace-maps* false)
-    (def wd wd)
-    (def repo repo)
-    (write-upgrade wd)
-    (g/git-add repo "deps.edn")
-    (g/git-commit repo "bump deps" {:name "airplane-bot"
-                                    :email "shakdwipeea@gmail.com"})
-    (g/git-push repo)))
+    (when update?
+      (set! *print-namespace-maps* false)
+      (write-upgrade wd)
+      (g/git-add repo "deps.edn")
+      (g/git-commit repo "bump deps" {:name "airplane-bot"
+                                      :email "shakdwipeea@gmail.com"})
+      (run-build p)
+      (g/git-push repo))
+    (run-build p)))
 
 #_(edn/read-string (pr-str (slurp (io/file wd "deps.edn"))))
 
@@ -80,3 +93,34 @@
 (defn build [{projects :projects}]
   (io/make-parents build-folder)
   (map build-project projects))
+
+(def project (-> "deploy.edn"
+                slurp
+                edn/read-string
+                :ep-build))
+
+(defn read-config []
+  (-> "deploy.edn"
+     slurp
+     edn/read-string))
+
+(defn deploy-project [{:keys [working-directory name ip]}]
+  (let [{:keys [working-directory name]} project] 
+    (d/exec-cmd ip (str "cd " working-directory " && git pull"))
+    (d/exec-cmd ip (str "systemctl restart " name))
+    (d/exec-cmd ip (str "systemctl status " name))))
+
+(defn build-and-deploy [project]
+  (-> project
+     build-project
+     deploy-project))
+
+(defn run-from-config []
+  (println "Running deploy pipeline")
+  (map (fn [[name proj]]
+         (build-and-deploy proj)) (read-config)))
+
+(defn -main [& args]
+  (timely/scheduled-item (timely/every 6
+                                       :hours)
+                         (run-from-config)))

@@ -62,7 +62,7 @@
 (defn install-certbot []
   (cmd-chain (install-packages ["software-properties-common"
                                 "python-software-properties"])
-             ["add-repository"  "ppa:certbot/certbot" "-y"]
+             ["add-apt-repository"  "ppa:certbot/certbot" "-y"]
              (install-package "python-certbot-nginx")))
 
 ; (install-certbot)
@@ -111,6 +111,15 @@
 (defn check-java []
   (cmd-str "java" "-version"))
 
+(def install-clojure 
+  "curl -O https://download.clojure.org/install/linux-install-1.9.0.381.sh && chmod +x linux-install-1.9.0.381.sh && sudo ./linux-install-1.9.0.381.sh")
+
+(defn set-env [env-vars]
+  (map (fn [k v]
+         (str "echo  \" as\" + \"NVM_DIR=/usr/local/nvm\" >> ~/.bashrc"))))
+
+
+
 ;;;;;;;;;;;
 ;; nginx ;;
 ;;;;;;;;;;;
@@ -125,19 +134,19 @@
 ;; app config ;;
 ;;;;;;;;;;;;;;;;
 
-; (defn app-config []
-;   (s/sh "cp" "./voidwalker.service" "/lib/systemd/system/voidwalker.service")
-;   (set-env! :database-url "jdbc:mysql://localhost/voidwalker?user=root&password=")
-;   (s/sh "java" "-jar" "voidwalker.jar" "migrate")
-;   (s/sh "systemctl" "daemon-reload")
-;   (enable-service "voidwalker"))
-;
-;
-; (defn -main [& args]
-;   (println "Starting setup")
-;   (do (println (:out (s/sh "ls")))
-;       (s/sh "cd" "voidwalker")
-;       (start-mysql!)
-;       (app-config)
-;       (configure-nginx))
-;   (println "Setup complete"))
+                                        ; (defn app-config []
+                                        ;   (s/sh "cp" "./voidwalker.service" "/lib/systemd/system/voidwalker.service")
+                                        ;   (set-env! :database-url "jdbc:mysql://localhost/voidwalker?user=root&password=")
+                                        ;   (s/sh "java" "-jar" "voidwalker.jar" "migrate")
+                                        ;   (s/sh "systemctl" "daemon-reload")
+                                        ;   (enable-service "voidwalker"))
+                                        ;
+                                        ;
+                                        ; (defn -main [& args]
+                                        ;   (println "Starting setup")
+                                        ;   (do (println (:out (s/sh "ls")))
+                                        ;       (s/sh "cd" "voidwalker")
+                                        ;       (start-mysql!)
+                                        ;       (app-config)
+                                        ;       (configure-nginx))
+                                        ;   (println "Setup complete"))

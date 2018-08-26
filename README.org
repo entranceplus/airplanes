@@ -14,6 +14,7 @@ You configure the tool using a edn file.
 
 #+BEGIN_SRC clojure
 {:proj1 {:trigger :push-any}
+ :build "clj -m user"}
 #+END_SRC
 
 First key is the project name, here ~proj1~. 
