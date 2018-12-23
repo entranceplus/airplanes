@@ -1,46 +1,56 @@
 * Airplanes
 
-Helpers to deploy stuff
+A service that makes deployment of your code easier
 
-** What is this?
 
-This project is structured with the [[https://github.com/danielsz/system/][system]] library.
-This starts a web server in development mode, and a web server + remote repl in production.
-The build tool used in this project is [[http://boot-clj.com/][Boot]].
 
-** Roadmap (WIP)
+** Features available
 
-You configure the tool using a edn file. 
++ Create new instances of linode / digital ocean server
++ generate nginx and systemd config for your services from clj map
++ setup (start/ reload) systemd behaviour on a remote ip
++ install various tools (postgres / java) on a remote ip (for ubuntu only)
++ a runner that reads from deploy.edn and runs / updates given app from the 
+given git host and the remote ip.
++ Runner can also parse clj's deps.edn and update any git dependecies if a newer
+hash is present for it. (eg. see deployments if ep-build)
++ Runner can perform git commits and push to the remote
 
-#+BEGIN_SRC clojure
-{:proj1 {:trigger :push-any}
- :build "clj -m user"}
-#+END_SRC
 
-First key is the project name, here ~proj1~. 
-The accepted keys are
+** Features to be implemented
 
-| Keys     | Description                                               |
-|----------+-----------------------------------------------------------|
-| :trigger | specifies when to build the project. Available values are |
-|          | src_clojure{:push-any, :push}                             |
-|----------+-----------------------------------------------------------|
-| :build   | Build command to build the project                        |
-|----------+-----------------------------------------------------------|
+*** Command line tool
 
-** Trigger behaviour
+The idea is that this should allow the user to login to the service and perform new deployments
+or manage existing deployments.
 
-| Key       | Description                                              |
-|-----------+----------------------------------------------------------|
-| :push-any | In this case, all the deps will be tracked and on update |
-|           | of any this project will be rebuild and redeployed       |
-|-----------+----------------------------------------------------------|
-| :push     | Build and deploy only when directly pushed here.         |
-|-----------+----------------------------------------------------------|
++ Allow login and signup through aviana
++ Create a new deployment. This would take us through prompts to fill the required details.
++ Allow deploy command for individual deployment configured.
++ List existing deployments
 
-** Rebuild flow 
+*** Service backend
+
+This would be the companion apis needed for the command line tool to work.
+
++ POST /users/:user-id/app creates a new deployment (referred to as app)
++ POST /users/:user-id/app/:app-id/deploy build and deploy the configured app
+  The request for this would basically be an entry from the deploy.end. On receiving this 
+request, we start the build and deploy process for the configured app.
++ GET /users/:user-id/app lists existing deployments
+
+*** Visibility into the builds happening
+In the current model, build steps are clojure fns. This provides no visibility into the builds
+running i.e. we can't see the steps happening, the errors occurred, etc. We can provide additional
+runners eg. circleci or lambdacd pipelines for improving this.
+
+
+* Notes
+** Current rebuild flow  
 
 Performed on each upgrade
+
+*** Actions during build
 
 - Update the deps.edn
 - Build the project. Command to be taken from ~:build~ key
@@ -52,9 +62,15 @@ Performed on each upgrade
 - Perform git pull
 - Restart systemctl service
 
+
 ** Deploy flow
 
 Performed only the first time
+
+
+** Runner flow
+- Circle ci to be one of the runners
+- derive circle ci config from the edn file and run circle ci through project
 
 ** Instructions
 *** Development

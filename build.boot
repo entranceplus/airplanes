@@ -1,5 +1,8 @@
 (set-env!
  :resource-paths #{"src" "resources"}
+ :repositories #(conj %
+                      ["jboss" {:url "https://repository.jboss.org/nexus/content/groups/public/"}]
+                      ["jitpack" {:url "https://jitpack.io"}])
  :dependencies '[[tolitius/boot-check "0.1.3" :scope "test"]
                  [org.danielsz/system "0.4.2-SNAPSHOT"]
                  [environ "1.1.0"]
@@ -24,7 +27,7 @@
                  [datawalk "0.1.12"]
                  [cheshire "5.8.0"]
                  [metosin/muuntaja "0.5.0"]
-                 [snow "0.4.3"]])
+                 [snow "0.4.5"]])
 
 (require
  '[tolitius.boot-check :as check]
