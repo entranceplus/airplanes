@@ -11,9 +11,9 @@ A service that makes deployment of your code easier
 + setup (start/ reload) systemd behaviour on a remote ip
 + install various tools (postgres / java) on a remote ip (for ubuntu only)
 + a runner that reads from deploy.edn and runs / updates given app from the 
-given git host and the remote ip.
+  given git host and the remote ip.
 + Runner can also parse clj's deps.edn and update any git dependecies if a newer
-hash is present for it. (eg. see deployments if ep-build)
+  hash is present for it. (eg. see deployments if ep-build)
 + Runner can perform git commits and push to the remote
 
 
@@ -34,9 +34,9 @@ or manage existing deployments.
 This would be the companion apis needed for the command line tool to work.
 
 + POST /users/:user-id/app creates a new deployment (referred to as app)
-+ POST /users/:user-id/app/:app-id/deploy build and deploy the configured app
++ POST /users/:user-id/app/:app-id/deploy build and deploy the configured app.
   The request for this would basically be an entry from the deploy.end. On receiving this 
-request, we start the build and deploy process for the configured app.
+  request, we start the build and deploy process for the configured app.
 + GET /users/:user-id/app lists existing deployments
 
 *** Visibility into the builds happening
