@@ -1,10 +1,10 @@
-* Airplanes
+#+TITLE: Airplanes
 
 A service that makes deployment of your code easier
 
 
 
-** Features available
+**  Features available
 
 + Create new instances of linode / digital ocean server
 + generate nginx and systemd config for your services from clj map
@@ -17,9 +17,9 @@ A service that makes deployment of your code easier
 + Runner can perform git commits and push to the remote
 
 
-** Features to be implemented
+**  Features to be implemented
 
-*** Command line tool
+***  Command line tool
 
 The idea is that this should allow the user to login to the service and perform new deployments
 or manage existing deployments.
@@ -29,7 +29,7 @@ or manage existing deployments.
 + Allow deploy command for individual deployment configured.
 + List existing deployments
 
-*** Service backend
+***  Service backend
 
 This would be the companion apis needed for the command line tool to work.
 
@@ -39,14 +39,14 @@ This would be the companion apis needed for the command line tool to work.
   request, we start the build and deploy process for the configured app.
 + GET /users/:user-id/app lists existing deployments
 
-*** Visibility into the builds happening
+***  Visibility into the builds happening
 In the current model, build steps are clojure fns. This provides no visibility into the builds
 running i.e. we can't see the steps happening, the errors occurred, etc. We can provide additional
 runners eg. circleci or lambdacd pipelines for improving this.
 
 
-* Notes
-** Current rebuild flow  
+*  Notes
+**  Current rebuild flow  
 
 Performed on each upgrade
 
@@ -63,16 +63,16 @@ Performed on each upgrade
 - Restart systemctl service
 
 
-** Deploy flow
+**  Deploy flow
 
 Performed only the first time
 
 
-** Runner flow
+**  Runner flow
 - Circle ci to be one of the runners
 - derive circle ci config from the edn file and run circle ci through project
 
-** Instructions
+**  Instructions
 *** Development
 
 Run a development pipeline from the command line:
